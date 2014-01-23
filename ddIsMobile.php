@@ -1,7 +1,7 @@
 <?php
 /**
  * ddIsMobile.php
- * @version 1.1 (2013-05-16)
+ * @version 1.1.1 (2014-01-23)
  * 
  * @desc The snippet detects browsing with a mobile device.
  * 
@@ -12,10 +12,10 @@
  * @param useCookie {0; 1} - Cookie use status (you may use this parameter to save the status of mobile device using). Default: 1.
  * @param cookieName {string} - Cookie name for result saving. Default: 'ddmobile'.
  * 
- * @link http://code.divandesign.biz/modx/ddismobile/1.1
+ * @link http://code.divandesign.biz/modx/ddismobile/1.1.1
  * 
- * @copyright 2013, DivanDesign
- * http://www.DivanDesign.ru
+ * @copyright 2014, DivanDesign
+ * http://www.DivanDesign.biz
  */
 
 $cookieName = (isset($cookieName) && trim($cookieName) != '') ? $cookieName : 'ddmobile';
@@ -67,8 +67,12 @@ if ($useCookie && isset($_COOKIE[$cookieName])){
 		'treo'
 	);
 	
-	reset($ua_mobile_key);
-	while (($mobile = stripos($user_agent, current($ua_mobile_key))) === false){next($ua_mobile_key);}
+	foreach ($ua_mobile_key as $val){
+		if (stripos($user_agent, $val) !== false){
+			$mobile = true;
+			break;
+		}
+	}
 	
 	if (!$mobile && 
 		(
@@ -86,6 +90,6 @@ if ($useCookie && isset($_COOKIE[$cookieName])){
 	if ($useCookie){
 		setcookie($cookieName, ($mobile ? 1 : 0), time() + 60 * 60 * 24 * 365 * 5, '/');
 	}
-	return $mobile ? $mobileResult : $defaultResult;
 }
+return $mobile ? $mobileResult : $defaultResult;
 ?>
