@@ -90,6 +90,6 @@ if ($useCookie && isset($_COOKIE[$cookieName])){
 	if ($useCookie){
 		setcookie($cookieName, ($mobile ? 1 : 0), time() + 60 * 60 * 24 * 365 * 5, '/');
 	}
-	return $mobile ? $mobileResult : $defaultResult;
 }
+return $mobile ? $mobileResult : $defaultResult;
 ?>
