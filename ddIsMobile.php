@@ -67,8 +67,12 @@ if ($useCookie && isset($_COOKIE[$cookieName])){
 		'treo'
 	);
 	
-	reset($ua_mobile_key);
-	while (($mobile = stripos($user_agent, current($ua_mobile_key))) === false){next($ua_mobile_key);}
+	foreach ($ua_mobile_key as $val){
+		if (stripos($user_agent, $val) !== false){
+			$mobile = true;
+			break;
+		}
+	}
 	
 	if (!$mobile && 
 		(
